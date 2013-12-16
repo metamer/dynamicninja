@@ -7,8 +7,7 @@ package com.actions;
  *
  */
 public class Action {
-	private double speed;
-	private double priority;
-	private 
+	// The cost in action points of doing this action
+	private double actionPointCost;
 
 }

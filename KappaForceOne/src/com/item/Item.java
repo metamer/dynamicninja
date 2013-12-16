@@ -6,7 +6,17 @@ package com.item;
  *
  */
 public class Item {
+	// Name of the item.
 	private String name;
-	private 
-
+	// Can something wear it?
+	private boolean wearable;
+	// Weight of the item
+	private double weight;
+	
+	public Item (String name, boolean wearable, double weight) {
+		this.name = name;
+		this.wearable = wearable;
+		this.weight = weight;
+	}
+	
 }
