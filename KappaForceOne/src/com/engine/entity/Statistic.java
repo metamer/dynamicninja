@@ -1,4 +1,4 @@
-package com.entity;
+package com.engine.entity;
 
 public class Statistic {
   private String name;

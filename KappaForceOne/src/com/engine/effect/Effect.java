@@ -1,6 +1,6 @@
-package com.effect;
+package com.engine.effect;
 
-import com.entity.Statistic;
+import com.engine.entity.Statistic;
 
 /**
  * Base class for any effect that can occur to an entity, such as a buff or

@@ -1,9 +1,9 @@
-package com.item;
+package com.engine.item;
 
 import java.util.ArrayList;
 
-import com.effect.Effect;
-import com.entity.BodyPart;
+import com.engine.effect.Effect;
+import com.engine.entity.BodyPart;
 
 public class Equipment extends Item{
 

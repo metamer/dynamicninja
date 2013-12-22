@@ -1,4 +1,4 @@
-package com.item;
+package com.engine.item;
 
 /**
  * Item base class any item should inherit from.

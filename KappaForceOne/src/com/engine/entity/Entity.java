@@ -1,8 +1,8 @@
-package com.entity;
+package com.engine.entity;
 
 import java.util.ArrayList;
 
-import com.effect.Effect;
+import com.engine.effect.Effect;
 
 /**
  * Base entity class, anything should inherit from this one.
