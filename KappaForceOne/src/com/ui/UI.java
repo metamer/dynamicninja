@@ -1,5 +1,5 @@
 package com.ui;
 
-public class UI {
+public interface UI {
 
 }
