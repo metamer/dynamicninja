@@ -1,4 +1,6 @@
-package com.entity;
+package com.effect;
+
+import com.entity.Statistic;
 
 /**
  * Base class for any effect that can occur to an entity, such as a buff or debuff.
