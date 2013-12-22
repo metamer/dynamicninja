@@ -2,6 +2,8 @@ package com.entity;
 
 import java.util.ArrayList;
 
+import com.effect.Effect;
+
 /**
  * Base entity class, anything should inherit from this one.
  * @author Matt
