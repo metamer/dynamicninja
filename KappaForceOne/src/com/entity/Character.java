@@ -1,6 +1,5 @@
 package com.entity;
 
-public class Character extends Entity{
-	
+public class Character extends Entity {
 
 }
