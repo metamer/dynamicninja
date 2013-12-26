@@ -9,9 +9,9 @@ import com.all.*;
 public interface UI {
   
   /*
-   * Draw the currently set UIState 
+   * Draw the UIState passed in 
    */
-  public void drawCurrentState();
+  public void drawUIState(UIState uiState);
   
   /*
    * Get action from user
