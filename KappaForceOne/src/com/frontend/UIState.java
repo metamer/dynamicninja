@@ -3,6 +3,7 @@
  */
 package com.frontend;
 
+import com.all.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
  */
 public class UIState {
   
-  private List<UIMenu> menuList; 
+  private List<UIMenu> menuList;
+  private List<GameMessage> gameMessages;
   private GameMap gameMap;
   
   /*
@@ -21,14 +23,16 @@ public class UIState {
   public UIState(GameMap gameMap){
     this.gameMap = gameMap;
     this.menuList = new ArrayList<UIMenu>();
+    this.gameMessages = new ArrayList<GameMessage>();
   }
   
   /*
    * Initialize with given list and gameMap
    */
-  public UIState(List<UIMenu> menuList, GameMap gameMap){
+  public UIState(GameMap gameMap, List<UIMenu> menuList, List<GameMessage> gameMessages){
     this.menuList = menuList;
     this.gameMap = gameMap;
+    this.gameMessages = gameMessages;
   }
   
   /**
@@ -44,6 +48,12 @@ public class UIState {
     return gameMap;
   }
   
+  /**
+   * @return the gameMessages
+   */
+  public List<GameMessage> getGameMessages() {
+    return gameMessages;
+  }
   
 
 }
