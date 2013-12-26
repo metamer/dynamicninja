@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author insidiousnoxious
- *
+ * State that is passed from Runner to UI
  */
 public class UIState {
   
