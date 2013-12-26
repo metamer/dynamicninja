@@ -3,13 +3,13 @@ package com.frontend;
 /*
  * Defines elements of a GameMap 
  */
-public class GameMapObject {
+public class GameMapEntry {
   
   public char symbol;
-  public GameMapObjectColor color;
-  public GameMapObjectAttribute attribute;
+  public GameMapEntryColor color;
+  public GameMapEntryAttribute attribute;
   
-  public GameMapObject(char symbol, GameMapObjectColor color, GameMapObjectAttribute attribute){
+  public GameMapEntry(char symbol, GameMapEntryColor color, GameMapEntryAttribute attribute){
    this.symbol=symbol;
    this.color=color;
    this.attribute=attribute;
@@ -18,7 +18,7 @@ public class GameMapObject {
   /*
    * copy constructor
    */
-  public GameMapObject(GameMapObject other){
+  public GameMapEntry(GameMapEntry other){
    this.symbol=other.symbol;
    this.color=other.color;
    this.attribute=other.attribute;

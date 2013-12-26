@@ -2,11 +2,11 @@ package com.frontend;
 
 public class ArrayGameMap implements GameMap {
 
-  private GameMapObject[][] gameMapArray;
+  private GameMapEntry[][] gameMapArray;
   private int xDim, yDim;
   
   public ArrayGameMap(int width, int height){
-   gameMapArray = new GameMapObject[width][height];
+   gameMapArray = new GameMapEntry[width][height];
   }
   
   @Override
@@ -20,7 +20,7 @@ public class ArrayGameMap implements GameMap {
   }
 
   @Override
-  public GameMapObject getObjectAt(int width, int height) {
+  public GameMapEntry getObjectAt(int width, int height) {
     return gameMapArray[width][height];
   }
 

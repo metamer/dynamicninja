@@ -6,6 +6,6 @@ public interface GameMap {
 
   public int width();
   
-  public GameMapObject getObjectAt(int width, int height);
+  public GameMapEntry getObjectAt(int width, int height);
   
 }
