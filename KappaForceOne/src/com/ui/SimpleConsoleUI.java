@@ -3,15 +3,16 @@
  */
 package com.ui;
 
-import com.frontend.GameMap;
-import com.frontend.UIState;
-import com.frontend.UserAction;
+import java.util.List;
+
+import com.all.GameMessage;
+import com.frontend.*;
 
 /**
  * @author insidiousnoxious
  *
  */
-public class ConsoleUI implements UI {
+public class SimpleConsoleUI implements UI {
 
   /* (non-Javadoc)
    * @see com.ui.UI#drawCurrentState()
@@ -21,14 +22,33 @@ public class ConsoleUI implements UI {
     
     GameMap gm = uiState.getGameMap();
     
+    boolean isFirst = true;
+    
+    for(UIMenu uim : uiState.getMenuList()){
+      if(!isFirst){
+        System.out.print(",");
+      }
+      else{
+        isFirst = false;
+      }
+      System.out.print(uim.getName());
+    }
+    
+    System.out.println();
+    
     for(int row = 0 ; row < gm.getHeight() ; row++){
       for(int col = 0 ; col < gm.getWidth() ; col++){
-        System.console().writer().print(gm.getObjectAt(row, col).getSymbol());
+        System.out.print(gm.getObjectAt(row, col).getSymbol());
       }
-      System.console().writer().println("");
+      System.out.println();
     }
-    throw new UnsupportedOperationException();
-
+    
+    List<GameMessage> lgm = uiState.getGameMessages(); 
+    
+    for(int i = 0 ; i< lgm.size() ; i++  ){
+      int listIndex =lgm.size() -  i - 1;
+      System.out.println("Message " + (listIndex+1) + ":" + lgm.get(listIndex).getMessageText());
+    }
   }
 
   /* (non-Javadoc)
