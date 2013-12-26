@@ -2,11 +2,11 @@ package com.frontend;
 
 public interface GameMap {
   
-  public int height();
+  public int getHeight();
 
-  public int width();
+  public int getWidth();
   
-  public GameMapEntry getObjectAt(int width, int height);
+  public GameMapEntry getObjectAt(int row, int column);
   
-  public void setObjectAt(int width, int height, GameMapEntry entryToSet);
+  public void setObjectAt(int row, int column, GameMapEntry entryToSet);
 }

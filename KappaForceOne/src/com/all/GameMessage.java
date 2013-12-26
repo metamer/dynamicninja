@@ -10,9 +10,9 @@ package com.all;
 public class GameMessage {
   
   private String messageText;
-  private MessageType messageType;
+  private GameMessageType messageType;
 
-  public GameMessage(String messageText, MessageType messageType){
+  public GameMessage(String messageText, GameMessageType messageType){
     this.messageText = messageText;
     this.messageType = messageType;
   }
@@ -27,7 +27,7 @@ public class GameMessage {
   /**
    * @return the messageType
    */
-  public MessageType getMessageType() {
+  public GameMessageType getMessageType() {
     return messageType;
   }
   

@@ -7,7 +7,7 @@ package com.all;
  * @author insidiousnoxious
  * Types of messages
  */
-public enum MessageType {
+public enum GameMessageType {
   
   COMBAT,
   NOTIFICATION,
