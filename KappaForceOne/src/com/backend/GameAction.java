@@ -7,7 +7,7 @@ package com.backend;
  * @author Matt
  * 
  */
-public class Action {
+public class GameAction {
   // The cost in action points of doing this action
   private double actionPointCost;
 

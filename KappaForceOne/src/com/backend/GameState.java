@@ -1,5 +1,5 @@
 package com.backend;
 
-public class State {
+public class GameState {
 
 }
