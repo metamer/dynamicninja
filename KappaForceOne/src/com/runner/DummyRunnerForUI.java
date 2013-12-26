@@ -6,7 +6,9 @@ package com.runner;
 import java.util.List;
 
 import com.backend.*;
+import com.engine.Engine;
 import com.frontend.*;
+import com.ui.UI;
 import com.all.*;
 
 /**
@@ -15,6 +17,7 @@ import com.all.*;
  */
 public class DummyRunnerForUI implements Runner {
   
+  private UI ui;
   private static UIState GenerateTestUIState(){
     GameMapEntry defaultGme = new GameMapEntry(' ',GameMapEntryColor.BLACK, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL);
     GameMap gm = new ArrayGameMap(5, 5, defaultGme);
@@ -46,7 +49,15 @@ public class DummyRunnerForUI implements Runner {
     return uiState;
   }
   
-  public DummyRunnerForUI(){  
+  public DummyRunnerForUI(){
+  }
+  
+  /* (non-Javadoc)
+   * @see com.runner.Runner#runGame()
+   */
+  @Override
+  public void runGame(){
+    ui.drawUIState(getUIState());
   }
   
   /* (non-Javadoc)
@@ -78,6 +89,16 @@ public class DummyRunnerForUI implements Runner {
    */
   @Override
   public GameAction MapUserAction(UserAction inputUserAction) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setTargetUI(UI ui) {
+   this.ui=ui;
+  }
+
+  @Override
+  public void setTargetEngine(Engine engine) {
     throw new UnsupportedOperationException();
   }
 

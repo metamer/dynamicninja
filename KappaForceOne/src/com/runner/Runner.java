@@ -1,10 +1,18 @@
 package com.runner;
 
 import com.all.*;
+import com.engine.Engine;
 import com.frontend.*;
+import com.ui.UI;
 import com.backend.*;
 
 public interface Runner {
+  
+  
+  /*
+   * Run game. This should be called after runner is set up to run the game
+   */
+  public void runGame();
   
   /*
    * Accessor for current UIState
@@ -25,5 +33,15 @@ public interface Runner {
    * Map input userAction to GameAction
    */
   public GameAction MapUserAction(UserAction inputUserAction);
+  
+  /*
+   * link to target UI
+   */
+  public void setTargetUI(UI ui);
+  
+  /*
+   * link to target UI
+   */
+  public void setTargetEngine(Engine engine);
 
 }
