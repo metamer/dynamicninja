@@ -8,4 +8,5 @@ public interface GameMap {
   
   public GameMapEntry getObjectAt(int width, int height);
   
+  public void setObjectAt(int width, int height, GameMapEntry entryToSet);
 }
