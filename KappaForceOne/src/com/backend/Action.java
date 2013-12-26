@@ -1,4 +1,4 @@
-package com.actions;
+package com.backend;
 
 /**
  * Base action class that all actions should inherit from, an action is
