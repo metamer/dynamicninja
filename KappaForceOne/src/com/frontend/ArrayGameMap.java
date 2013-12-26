@@ -20,9 +20,8 @@ public class ArrayGameMap implements GameMap {
   }
 
   @Override
-  public GameMapObject getObjectAt(int x, int y) {
-    
-    return gameMapArray[x][y];
+  public GameMapObject getObjectAt(int width, int height) {
+    return gameMapArray[width][height];
   }
 
 }
