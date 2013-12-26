@@ -5,9 +5,9 @@ package com.frontend;
  */
 public class GameMapEntry {
   
-  public char symbol;
-  public GameMapEntryColor color;
-  public GameMapEntryAttribute attribute;
+  private char symbol;
+  private GameMapEntryColor color;
+  private GameMapEntryAttribute attribute;
   
   public GameMapEntry(char symbol, GameMapEntryColor color, GameMapEntryAttribute attribute){
    this.symbol=symbol;
@@ -22,6 +22,20 @@ public class GameMapEntry {
    this.symbol=other.symbol;
    this.color=other.color;
    this.attribute=other.attribute;
+  }
+  
+  //accessor methods
+  
+  public char getSymbol(){
+    return symbol;
+  }
+  
+  public GameMapEntryColor getColor(){
+    return color;
+  }
+  
+  public GameMapEntryAttribute getAttribute(){
+    return attribute;
   }
   
 }
