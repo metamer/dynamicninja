@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="console" default="dist" basedir=".">
- 
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="console" default="default" basedir=".">
+
   <!-- global properties -->
 
   <property name="src.dir" location="src" />
@@ -9,9 +9,10 @@
   <property name="obj.dir" location="obj" />
   <property name="test.classes.dir" location="${build.dir}/test" />
   <property name="test.data.dir" location="${build.dir}/test-report" />
-  
+
   <property name="junit.fork" value="true" />
 
+  <!-- setup classpaths -->
 
   <path id="build.classpath">
     <fileset dir="${lib.dir}">
@@ -20,14 +21,17 @@
   </path>
 
   <path id="test.classpath">
-      <fileset dir="${lib.dir}">
-        <include name="**/*.jar" />
-      </fileset>
-    </path>
-  
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+  <!-- change default target here -->
+  <target name="default" depends="dist" description="default target"/>
+
   <!-- platform dependence -->
 
-  <target name="check-os">
+  <target name="check-os" description="check operating system">
 
     <condition property="isMac">
       <os family="mac" />
@@ -42,7 +46,7 @@
     </condition>
   </target>
 
-  <target name="check-arch">
+  <target name="check-arch" description="check processor architecture">
     <condition property="is64bit">
       <os arch="amd64" />
     </condition>
@@ -52,14 +56,16 @@
     </condition>
   </target>
 
-  <target name="set-build-env" depends="check-os, check-arch" />
+  <target name="set-build-env" depends="check-os, check-arch" description="setup build environment variables"/>
 
   <!-- dependency resolution -->
-  
+
   <target name="resolve" description="retrieve dependencies with ivy">
-      <ivy:retrieve />
+    <ivy:retrieve />
   </target>
-  <!-- jCurses -->
+  <!--  jCurses 
+        handled separately since it is currently not on maven and requires local dynamically linked libs 
+  -->
 
   <target name="jcurses-set-env" depends="set-build-env">
 
@@ -114,9 +120,18 @@
 
   <!-- non-standard utility targets -->
 
-  <target name="prepare-libs" depends="jcurses-lib-load" />
+  <target name="prepare-libs" depends="resolve,jcurses-lib-load" description="prepare libs after resolving" />
 
-  <target name="compile" depends="init">
+  <target name="clean-libs" description="remove libs loaded during build">
+    <delete>
+      <fileset dir="${lib.dir}" includes="*.dll,*.so" />
+    </delete>
+    <delete>
+      <fileset dir="${lib.dir}" includes="*.jar" excludes="jcurses.jar"/>
+    </delete>
+  </target>
+
+  <target name="compile" depends="init" description="init then compile classes">
     <javac srcdir="${src.dir}" 
       destdir="${build.dir}" 
       classpathref="build.classpath" 
@@ -124,47 +139,42 @@
     />
   </target>
 
-  <target name="re-init" depends="clean,init" />
+  <target name="re-init" depends="clean,init" description="clean then init"/>
 
-  <target name="recompile" depends="clean,init,compile" />
+  <target name="recompile" depends="clean,init,compile" description="clean then compile"/>
 
   <!-- standard targets -->
 
-  <target name="test" depends="compile">
+  <target name="test" depends="compile" description="run JUnit tests">
     <junit printsummary="no"
            errorProperty="test.failed" 
            failureProperty="test.failed" 
-           fork="${junit.fork}"> 
-      <classpath refid="test.classpath"/> 
+           fork="${junit.fork}">
+      <classpath refid="test.classpath"/>
 
-      <test name="${testcase}" if="testcase"/> 
-      <batchtest todir="${test.data.dir}" unless="testcase"> 
+      <test name="${testcase}" if="testcase"/>
+      <batchtest todir="${test.data.dir}" unless="testcase">
         <fileset dir="${test.classes.dir}" 
                  includes="**/*Test.class" 
-        /> 
+        />
       </batchtest>
-    </junit> 
-  </target>
-  
-  <target name="distclean">
-    <!-- Cleanup files copied from obj -->
-    <delete>
-      <fileset dir="${lib.dir}" includes="*.dll,*.so" />
-    </delete>
+    </junit>
   </target>
 
-  <target name="clean" depends="distclean">
+  <target name="distclean" description ="clean distributables prepared by dist">
+  </target>
+
+  <target name="clean" depends="distclean, clean-libs" description="clean all files">
     <delete dir="${build.dir}" />
   </target>
 
-  <target name="init" depends="resolve,prepare-libs">
+  <target name="init" depends="resolve,prepare-libs" description="initialize directory structure and dependencies">
     <mkdir dir="${build.dir}" />
   </target>
 
-  <target name="dist" depends="compile">
-    <description>Builds console app and sets up distributables</description>
+  <target name="dist" depends="compile" description="sets up distributables">
   </target>
 
-  <target name="all" depends="test,dist"/>
+  <target name="all" depends="test,dist" description="run tests then distribute"/>
 
 </project>
