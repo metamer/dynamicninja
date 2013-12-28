@@ -60,7 +60,7 @@
 		      </and>
 		    </condition>
 		    
-    <condition property="jcursesObj.name" value="libjcurses_64.so">
+    <condition property="jcursesObj.name" value="libjcurses64.so">
           <and> 
             <istrue value="${isUnix}"/>
            <istrue value="${is64bit}"/>
@@ -74,7 +74,7 @@
 		  </and>
 		</condition>
 		
-		<condition property="jcursesObj.name" value="libjcurses_64.dll">
+		<condition property="jcursesObj.name" value="libjcurses64.dll">
 		      <and> 
 		       <istrue value="${isWindows}"/>
 		       <istrue value="${is64bit}"/>
