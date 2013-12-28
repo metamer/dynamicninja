@@ -95,7 +95,7 @@ public class TestWindow extends Window implements ItemListener, ActionListener,
     Widget w = event.getSource();
 
     if (w == buttonOne) {
-      FileDialog dial = new FileDialog("File wählen");
+      FileDialog dial = new FileDialog("File whlen");
       dial.show();
 
       if (dial.getChoosedFile() != null) {
