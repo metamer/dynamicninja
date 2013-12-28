@@ -146,12 +146,14 @@
   <!-- standard targets -->
 
   <target name="test" depends="compile" description="run JUnit tests">
+    <mkdir dir="${test.data.dir}"/>
     <junit printsummary="no"
            errorProperty="test.failed" 
            failureProperty="test.failed" 
            fork="${junit.fork}">
       <classpath refid="test.classpath"/>
-
+      <formatter type="brief" usefile="false"/>
+      <formatter type="xml"/>
       <test name="${testcase}" if="testcase"/>
       <batchtest todir="${test.data.dir}" unless="testcase">
         <fileset dir="${test.classes.dir}" 
@@ -159,6 +161,12 @@
         />
       </batchtest>
     </junit>
+    <junitreport todir="${test.data.dir}">
+      <fileset dir="${test.data.dir}">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${test.data.dir}"/>
+    </junitreport>
   </target>
 
   <target name="distclean" description ="clean distributables prepared by dist">
