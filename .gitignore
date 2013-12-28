@@ -1,5 +1,7 @@
 *.class
 
+jcurses.log
+
 # Package Files #
 *.jar
 *.war
