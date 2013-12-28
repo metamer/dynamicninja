@@ -127,7 +127,7 @@
   </target>
 			
   <target name="dist" depends="compile">
-    <description>Builds app and sets up distributables</description>
+    <description>Builds console app and sets up distributables</description>
   </target>
 
 	<target name="all" depends="compile"/>
