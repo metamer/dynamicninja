@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
-<project name="ConsoleGame" default="dist" basedir=".">
-
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="console" default="dist" basedir=".">
+ 
   <!-- global properties -->
 
   <property name="src.dir" location="src" />
   <property name="lib.dir" location="lib" />
-  <property name="build.dir" location="bin" />
+  <property name="build.dir" location="build" />
   <property name="obj.dir" location="obj" />
+  <property name="test.classes.dir" location="${build.dir}/test" />
+  <property name="test.data.dir" location="${build.dir}/test-report" />
+  
+  <property name="junit.fork" value="true" />
 
 
   <path id="build.classpath">
@@ -15,6 +19,12 @@
     </fileset>
   </path>
 
+  <path id="test.classpath">
+      <fileset dir="${lib.dir}">
+        <include name="**/*.jar" />
+      </fileset>
+    </path>
+  
   <!-- platform dependence -->
 
   <target name="check-os">
@@ -44,6 +54,11 @@
 
   <target name="set-build-env" depends="check-os, check-arch" />
 
+  <!-- dependency resolution -->
+  
+  <target name="resolve" description="retrieve dependencies with ivy">
+      <ivy:retrieve />
+  </target>
   <!-- jCurses -->
 
   <target name="jcurses-set-env" depends="set-build-env">
@@ -111,6 +126,22 @@
 
   <!-- standard targets -->
 
+  <target name="test" depends="compile">
+    <junit printsummary="no"
+           errorProperty="test.failed" 
+           failureProperty="test.failed" 
+           fork="${junit.fork}"> 
+      <classpath refid="test.classpath"/> 
+
+      <test name="${testcase}" if="testcase"/> 
+      <batchtest todir="${test.data.dir}" unless="testcase"> 
+        <fileset dir="${test.classes.dir}" 
+                 includes="**/*Test.class" 
+        /> 
+      </batchtest>
+    </junit> 
+  </target>
+  
   <target name="distclean">
     <!-- Cleanup files copied from obj -->
     <delete>
@@ -122,7 +153,7 @@
     <delete dir="${build.dir}" />
   </target>
 
-  <target name="init" depends="prepare-libs">
+  <target name="init" depends="resolve,prepare-libs">
     <mkdir dir="${build.dir}" />
   </target>
 
@@ -130,6 +161,6 @@
     <description>Builds console app and sets up distributables</description>
   </target>
 
-  <target name="all" depends="compile"/>
+  <target name="all" depends="test,dist"/>
 
 </project>
