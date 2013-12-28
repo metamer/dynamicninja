@@ -1,8 +1,8 @@
 package com.frontend;
 
-/*
+/**
  * Defines elements of a GameMap 
- */
+ **/
 public class GameMapEntry {
   
   private char symbol;
@@ -10,7 +10,8 @@ public class GameMapEntry {
   private GameMapEntryColor backgroundColor;
   private GameMapEntryAttribute attribute;
   
-  public GameMapEntry(char symbol, GameMapEntryColor foregroundColor, GameMapEntryColor backgroundColor, GameMapEntryAttribute attribute){
+  public GameMapEntry(char symbol, GameMapEntryColor foregroundColor,
+      GameMapEntryColor backgroundColor, GameMapEntryAttribute attribute){
    this.symbol=symbol;
    this.foregroundColor=foregroundColor;
    this.backgroundColor=backgroundColor;
