@@ -80,14 +80,24 @@
 		       <istrue value="${is64bit}"/>
 		      </and>
     </condition>
-				
+		
 		<echo>
-			Target file is ${jcursesObj.name}
+		Target jcurses object file is ${jcursesObj.name}
 		</echo>
+		
+		<echo>
+    Copying ${jcursesObj.name} from ${obj.dir} to ${lib.dir}
+    </echo>
+		
+    <copy file="${obj.dir}/${jcursesObj.name}" todir="${lib.dir}" overwrite="true"/>
 	</target>
 	
   <target name="clean">
     <delete dir="${build.dir}" />
+  	<!-- Cleanup files copied from obj -->
+  	<delete>
+  		<fileset dir="${lib.dir}" includes="*.dll,*.so" />
+		</delete>
   </target>
 
   
