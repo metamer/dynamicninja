@@ -12,11 +12,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
-			<triggers>clean,full,incremental,</triggers>
+			<triggers>clean,full,</triggers>
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/jCursesBuild.launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/console-builder.launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
