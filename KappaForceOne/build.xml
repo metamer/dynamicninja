@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<project name="Ant-Test" default="Main" basedir=".">
+<project name="ConsoleGame" default="dist" basedir=".">
   
-  
+  <!-- global properties -->
+	
   <property name="src.dir" location="src" />
   <property name="lib.dir" location="lib" />
   <property name="build.dir" location="bin" />
@@ -14,10 +15,9 @@
     </fileset>
   </path>
 
-  
+  <!-- platform dependence -->
 
-	
-	<target name="checkos">
+	<target name="check-os">
 
 		 <condition property="isMac">
 		    <os family="mac" />
@@ -32,7 +32,7 @@
 		  </condition>
 	</target>
 	
-	<target name="checkarch">
+	<target name="check-arch">
 		 <condition property="is64bit">
 		      <os arch="amd64" />
 		    </condition>
@@ -42,78 +42,94 @@
 		    </condition>
   </target>
 	
+	<target name ="set-build-env" depends = "check-os, check-arch"/>
+	 
+	<!-- jCurses -->
 	
-	
-	<target name ="setbuildenv" depends = "checkos, checkarch">
-		<echo>
-			Setting build environment for ${os.name}, version ${os.version} and ${os.arch}
-			isUnix = ${isUnix}
-			isWindows = ${isWindows}
-			is32Bit = ${is32bit}
-			is64Bit = ${is64bit}
-		</echo>
-		
-		<condition property="jcursesObj.name" value="libjcurses.so">
-		      <and> 
-		        <istrue value="${isUnix}"/>
-		       <istrue value="${is32bit}"/>
-		      </and>
-		    </condition>
-		    
-    <condition property="jcursesObj.name" value="libjcurses64.so">
+  <target name="jcurses-set-env" depends = "set-build-env">
+
+    <condition property="jcurses.obj.name" value="libjcurses.so">
+          <and> 
+            <istrue value="${isUnix}"/>
+           <istrue value="${is32bit}"/>
+          </and>
+        </condition>
+        
+    <condition property="jcurses.obj.name" value="libjcurses64.so">
           <and> 
             <istrue value="${isUnix}"/>
            <istrue value="${is64bit}"/>
           </and>
     </condition>
-		
-		<condition property="jcursesObj.name" value="libjcurses.dll">
-		  <and> 
-		    <istrue value="${isWindows}"/>
-			 <istrue value="${is32bit}"/>
-		  </and>
-		</condition>
-		
-		<condition property="jcursesObj.name" value="libjcurses64.dll">
-		      <and> 
-		       <istrue value="${isWindows}"/>
-		       <istrue value="${is64bit}"/>
-		      </and>
+    
+    <condition property="jcurses.obj.name" value="libjcurses.dll">
+      <and> 
+        <istrue value="${isWindows}"/>
+       <istrue value="${is32bit}"/>
+      </and>
     </condition>
-		
-		<echo>
-		Target jcurses object file is ${jcursesObj.name}
-		</echo>
-		
-		<echo>
-    Copying ${jcursesObj.name} from ${obj.dir} to ${lib.dir}
+    
+    <condition property="jcurses.obj.name" value="libjcurses64.dll">
+          <and> 
+           <istrue value="${isWindows}"/>
+           <istrue value="${is64bit}"/>
+          </and>
+    </condition>
+    
+    <echo>
+    Target jcurses object file is ${jcurses.obj.name}
     </echo>
-		
-    <copy file="${obj.dir}/${jcursesObj.name}" todir="${lib.dir}" overwrite="true"/>
+    
+  </target>
+
+  <target name="jcurses-pre-load-check" depends ="jcurses-set-env">
+    <condition property="jcurses.lib.loaded">
+     <available file="${lib.dir}/${jcurses.obj.name}"/>
+    </condition>
+  </target>
+  
+  <target name="jcurses-lib-load" depends = "jcurses-pre-load-check" unless="${jcurses.lib.loaded}">
+    <echo>
+        Copying ${jcurses.obj.name} from ${obj.dir} to ${lib.dir}
+    </echo>
+        <copy file="${obj.dir}/${jcurses.obj.name}" todir="${lib.dir}" overwrite="true"/>
+    
+    <property name="jcurses.lib.loaded" value="true"/>
+  </target>
+
+	<!-- utils for -->
+	
+	<target name="prepare-libs" depends = "jcurses-lib-load"/>
+	
+	<target name="compile" depends="init">
+	  <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" />
 	</target>
 	
-  <target name="clean">
-    <delete dir="${build.dir}" />
-  	<!-- Cleanup files copied from obj -->
-  	<delete>
-  		<fileset dir="${lib.dir}" includes="*.dll,*.so" />
+	<target name="re-init" depends="clean,init"/>
+	
+	<target name="recompile" depends="clean,init,compile"/>
+	
+	<!-- standard targets -->
+	
+	<target name ="distclean">
+		<!-- Cleanup files copied from obj -->
+		<delete>
+		      <fileset dir="${lib.dir}" includes="*.dll,*.so" />
 		</delete>
+	</target>
+	
+  <target name="clean" depends = "distclean">
+    <delete dir="${build.dir}" />
   </target>
 
-  
-  <target name="makedir">
+  <target name="init" depends = "prepare-libs">
     <mkdir dir="${build.dir}" />
   </target>
-
-  
-  <target name="compile" depends="clean, setbuildenv, makedir">
-    <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" />
+			
+  <target name="dist" depends="compile">
+    <description>Builds app and sets up distributables</description>
   </target>
 
-
-
-  <target name="Main" depends="compile">
-    <description>Main target</description>
-  </target>
-
+	<target name="all" depends="compile"/>
+	
 </project> 
