@@ -1,0 +1,4 @@
+# allow object files #
+
+!*.obj
+!*.so
