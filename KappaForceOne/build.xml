@@ -97,7 +97,7 @@
     <property name="jcurses.lib.loaded" value="true"/>
   </target>
 
-	<!-- utils for -->
+	<!-- non-standard utility targets -->
 	
 	<target name="prepare-libs" depends = "jcurses-lib-load"/>
 	
