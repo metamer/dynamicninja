@@ -5,8 +5,9 @@
   <property name="src.dir" location="src" />
   <property name="lib.dir" location="lib" />
   <property name="build.dir" location="bin" />
+	<property name="obj.dir" location="obj" />
 
-  
+  	
   <path id="build.classpath">
     <fileset dir="${lib.dir}">
       <include name="**/*.jar" />
@@ -14,6 +15,77 @@
   </path>
 
   
+
+	
+	<target name="checkos">
+
+		 <condition property="isMac">
+		    <os family="mac" />
+		  </condition>
+
+		  <condition property="isWindows">
+		    <os family="windows" />
+		  </condition>
+
+		  <condition property="isUnix">
+		    <os family="unix" />
+		  </condition>
+	</target>
+	
+	<target name="checkarch">
+		 <condition property="is64bit">
+		      <os arch="amd64" />
+		    </condition>
+		  
+		  <condition property="is32bit">
+		      <os arch="i386" />
+		    </condition>
+  </target>
+	
+	
+	
+	<target name ="setbuildenv" depends = "checkos, checkarch">
+		<echo>
+			Setting build environment for ${os.name}, version ${os.version} and ${os.arch}
+			isUnix = ${isUnix}
+			isWindows = ${isWindows}
+			is32Bit = ${is32bit}
+			is64Bit = ${is64bit}
+		</echo>
+		
+		<condition property="jcursesObj.name" value="libjcurses.so">
+		      <and> 
+		        <istrue value="${isUnix}"/>
+		       <istrue value="${is32bit}"/>
+		      </and>
+		    </condition>
+		    
+    <condition property="jcursesObj.name" value="libjcurses_64.so">
+          <and> 
+            <istrue value="${isUnix}"/>
+           <istrue value="${is64bit}"/>
+          </and>
+    </condition>
+		
+		<condition property="jcursesObj.name" value="libjcurses.dll">
+		  <and> 
+		    <istrue value="${isWindows}"/>
+			 <istrue value="${is32bit}"/>
+		  </and>
+		</condition>
+		
+		<condition property="jcursesObj.name" value="libjcurses_64.dll">
+		      <and> 
+		       <istrue value="${isWindows}"/>
+		       <istrue value="${is64bit}"/>
+		      </and>
+    </condition>
+				
+		<echo>
+			Target file is ${jcursesObj.name}
+		</echo>
+	</target>
+	
   <target name="clean">
     <delete dir="${build.dir}" />
   </target>
@@ -24,7 +96,7 @@
   </target>
 
   
-  <target name="compile" depends="clean, makedir">
+  <target name="compile" depends="clean, setbuildenv, makedir">
     <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" />
   </target>
 
