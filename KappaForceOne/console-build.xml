@@ -117,7 +117,11 @@
   <target name="prepare-libs" depends="jcurses-lib-load" />
 
   <target name="compile" depends="init">
-    <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" />
+    <javac srcdir="${src.dir}" 
+      destdir="${build.dir}" 
+      classpathref="build.classpath" 
+      includeantruntime="false"
+    />
   </target>
 
   <target name="re-init" depends="clean,init" />
