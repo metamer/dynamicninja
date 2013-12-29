@@ -7,7 +7,7 @@
   <property name="lib.dir" location="lib" />
   <property name="build.dir" location="build" />
   <property name="obj.dir" location="obj" />
-  <property name="test.classes.dir" location="${build.dir}/test" />
+  <property name="test.classes.dir" location="${build.dir}" /> <!-- tests are performed on built classes --> 
   <property name="test.data.dir" location="${build.dir}/test-report" />
 
   <property name="junit.fork" value="true" />
@@ -21,6 +21,7 @@
   </path>
 
   <path id="test.classpath">
+    <pathelement path="${test.classes.dir}"/>
     <fileset dir="${lib.dir}">
       <include name="**/*.jar" />
     </fileset>
