@@ -9,4 +9,5 @@ public interface GameMap {
   public GameMapEntry getObjectAt(int row, int column);
   
   public void setObjectAt(int row, int column, GameMapEntry entryToSet);
+  
 }
