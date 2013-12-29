@@ -12,6 +12,9 @@ public class GameMapEntry {
 
   public GameMapEntry(char symbol, GameMapEntryColor foregroundColor,
       GameMapEntryColor backgroundColor, GameMapEntryAttribute attribute) {
+    if(foregroundColor == null || backgroundColor == null || attribute == null)
+      throw new IllegalArgumentException("Null colors/attributes cannot be used");
+    
     this.symbol = symbol;
     this.foregroundColor = foregroundColor;
     this.backgroundColor = backgroundColor;
