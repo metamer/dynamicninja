@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.com.ui.jcurses;
+package test.com.ui;
 
 import static org.junit.Assert.*;
 
