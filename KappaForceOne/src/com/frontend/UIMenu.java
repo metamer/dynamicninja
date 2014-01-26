@@ -3,6 +3,11 @@
  */
 package com.frontend;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.all.util.Tree;
+
 /**
  * @author insidiousnoxious
  * Represents menus available through the UI
@@ -10,9 +15,10 @@ package com.frontend;
 public class UIMenu {
   
   private String name;
-  
+  Tree<UIMenuItem> menuItems; 
   public UIMenu(String name){
     this.name=name;
+    menuItems= new Tree<UIMenuItem>();
   }
   
   //accessor methods
