@@ -21,7 +21,7 @@ public class DummyRunnerForUI implements Runner {
   private UI ui;
   private static UIState GenerateTestUIState(){
     GameMapEntry defaultGme = new GameMapEntry(' ',GameMapEntryColor.BLACK, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL);
-    GameMap gm = new ArrayGameMap(5, 5, defaultGme);
+    GameMap gm = new ArrayGameMap(10,10, defaultGme);
     
     gm.setObjectAt(0,0, new GameMapEntry('J',GameMapEntryColor.BLUE, GameMapEntryColor.BLACK, GameMapEntryAttribute.BOLD));
     gm.setObjectAt(0,1, new GameMapEntry('U',GameMapEntryColor.CYAN, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));

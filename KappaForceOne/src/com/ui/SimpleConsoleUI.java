@@ -24,8 +24,8 @@ public class SimpleConsoleUI implements UI {
     
     boolean isFirst = true;
     
-    for( UIMenuType key : uiState.getMenuList().keySet()){
-      UIMenu uim = uiState.getMenuList().get(key);
+    for( UIMenuType key : uiState.getMenuMap().keySet()){
+      UIMenu uim = uiState.getMenuMap().get(key);
         if(!isFirst){
           System.out.print(",");
         }

@@ -41,7 +41,7 @@ public class UIState {
   /**
    * @return the menuMap
    */
-  public Map<UIMenuType,UIMenu> getMenuList() {
+  public Map<UIMenuType,UIMenu> getMenuMap() {
     return menuMap;
   }
   

@@ -4,6 +4,7 @@
 package com.frontend;
 
 import com.all.util.Tree;
+import com.all.util.TreeNode;
 
 /**
  * @author insidiousnoxious
@@ -11,17 +12,23 @@ import com.all.util.Tree;
  */
 public class UIMenu {
   
-  private String name;
   Tree<UIMenuItem> menuItems; 
+
   public UIMenu(String name){
-    this.name=name;
     menuItems= new Tree<UIMenuItem>();
+    menuItems.setRoot((new TreeNode<UIMenuItem>()));
+    menuItems.getRoot().setData(new UIMenuItem(name));
   }
   
   //accessor methods
   
   public String getName(){
-    return name;
+    if(menuItems.getRoot().getData() == null){
+      return null;
+    }
+    
+    return menuItems.getRoot().getData().getName();
+    
   }
 
 }

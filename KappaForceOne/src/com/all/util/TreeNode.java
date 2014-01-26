@@ -11,19 +11,19 @@ import java.util.List;
  *
  */
 public class TreeNode<T> {
-  T data;
+  private T data;
   TreeNode<T> parent;
   List<TreeNode<T>> children;
   
 
   public TreeNode(){
-    this.data=null;
+    this.setData(null);
     children = new ArrayList<TreeNode<T>>();
     this.parent = null;
   }
   
   public TreeNode(T data){
-    this.data=data;
+    this.setData(data);
     children = new ArrayList<TreeNode<T>>();
     this.parent = null;
   }
@@ -59,6 +59,20 @@ public class TreeNode<T> {
   
   public void setParent(TreeNode<T> tn){
     parent = tn;
+  }
+
+  /**
+   * @return the data
+   */
+  public T getData() {
+    return data;
+  }
+
+  /**
+   * @param set the data to set
+   */
+  public void setData(T data) {
+    this.data = data;
   }
   
   

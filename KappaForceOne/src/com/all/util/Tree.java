@@ -19,5 +19,13 @@ public class Tree<T> {
     this.root = root; 
   }
   
+  public TreeNode<T> getRoot(){
+    return this.root;
+  }
+  
+  public void setRoot(TreeNode<T> root){
+    this.root=root;
+  }
+  
   //copy constructor not implemented since it will depend on T (if T can be deep copied)
 }
