@@ -3,6 +3,7 @@ package com.ui.jcurses;
 import com.all.GameMessage;
 import com.frontend.GameMap;
 import com.frontend.GameMapEntry;
+import com.frontend.GameMapEntryColor;
 import com.frontend.UIMenuType;
 import com.frontend.UIState;
 import com.frontend.UserAction;
@@ -25,32 +26,43 @@ import java.util.Map;
 public class JCursesUI extends Window implements UI {
 
   private List messageList = null;
-  private final int MESSAGE_LIMIT = 10;
-  private final int GAMEMAP_HEIGHT = 80;
-  private final int GAMEMAP_WIDTH = 24;
+  private final int MESSAGE_LIMIT = 3;
   
   private java.util.List<Button> menuList;
   private Map<Button,UIMenuType> buttonToMenuTypeMap = new HashMap<Button,UIMenuType>();
   BorderPanel buttonPanel, gameMapPanel;
 
+  
+  private static final Map<GameMapEntryColor, Short> COLOR_MAP = new HashMap<GameMapEntryColor,Short>(){{
+    put(GameMapEntryColor.BLUE, CharColor.BLUE);
+    put(GameMapEntryColor.CYAN, CharColor.CYAN);
+    put(GameMapEntryColor.GREEN, CharColor.GREEN);
+    put(GameMapEntryColor.MAGENTA, CharColor.MAGENTA);
+    put(GameMapEntryColor.RED, CharColor.RED);
+    put(GameMapEntryColor.YELLOW, CharColor.YELLOW);
+    put(GameMapEntryColor.WHITE, CharColor.WHITE);
+    put(GameMapEntryColor.BLACK, CharColor.BLACK);
+}};
+  
   public JCursesUI(int width, int height){
-    super(width,height, true, "Game");    
-
+    super(width,height, true, "Game");
+        
     BorderLayoutManager mainWindowManager = new BorderLayoutManager();
     getRootPanel().setLayoutManager(mainWindowManager);
 
-    buttonPanel = new BorderPanel(50,2);
+    buttonPanel = new BorderPanel();
     messageList = new List(MESSAGE_LIMIT);
     messageList.setTitle("Messages");
     
-    gameMapPanel = new BorderPanel();
+    gameMapPanel = new BorderPanel(80,20);
 
-    mainWindowManager.addWidget(buttonPanel, BorderLayoutManager.NORTH, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
-   // mainWindowManager.addWidget(messageList, BorderLayoutManager.SOUTH, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(buttonPanel, BorderLayoutManager.SOUTH, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(messageList, BorderLayoutManager.EAST, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     mainWindowManager.addWidget(gameMapPanel, BorderLayoutManager.CENTER, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
 
     this.pack();
     this.show();
+    
   }
 
   @Override
@@ -128,14 +140,16 @@ public class JCursesUI extends Window implements UI {
     int mapHeight = gmap.getHeight();
     int mapWidth = gmap.getWidth();
     GridLayoutManager gm = new GridLayoutManager(mapWidth, mapHeight);
+      
     gameMapPanel.setLayoutManager(gm);
     
     for(int row = 0 ; row < mapHeight ; row++){
       for(int col = 0 ; col < mapWidth ; col++){
         GameMapEntry gme = gmap.getObjectAt(row, col);
-        Label l = new Label(Character.toString(gme.getSymbol()));
+        
+        Label l = new Label(Character.toString(gme.getSymbol()),new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor())));
         gm.addWidget(l, col, row, 1, 1, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
-        //l.setColors(new CharColor(, 0));
+        
       }
     }
     
