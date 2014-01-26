@@ -24,14 +24,15 @@ public class SimpleConsoleUI implements UI {
     
     boolean isFirst = true;
     
-    for(UIMenu uim : uiState.getMenuList()){
-      if(!isFirst){
-        System.out.print(",");
-      }
-      else{
-        isFirst = false;
-      }
-      System.out.print(uim.getName());
+    for( UIMenuType key : uiState.getMenuList().keySet()){
+      UIMenu uim = uiState.getMenuList().get(key);
+        if(!isFirst){
+          System.out.print(",");
+        }
+        else{
+          isFirst = false;
+        }
+        System.out.print(uim.getName());
     }
     
     System.out.println();

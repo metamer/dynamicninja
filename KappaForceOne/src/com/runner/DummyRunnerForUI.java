@@ -4,6 +4,7 @@
 package com.runner;
 
 import java.util.List;
+import java.util.Map;
 
 import com.backend.*;
 import com.engine.Engine;
@@ -36,10 +37,10 @@ public class DummyRunnerForUI implements Runner {
     
     UIState uiState = new UIState(gm);
     
-    List<UIMenu> gml = uiState.getMenuList();
-    gml.add(new UIMenu("FirstMenu"));
-    gml.add(new UIMenu("MenuSecond"));
-    gml.add(new UIMenu("MenuTheIII"));
+    
+    uiState.addMenu(UIMenuType.ACTIONS, new UIMenu("FirstMenu"));
+    uiState.addMenu(UIMenuType.SYSTEM, new UIMenu("MenuSecond"));
+    uiState.addMenu(UIMenuType.COMBAT, new UIMenu("MenuTheIII"));
     
     List<GameMessage> gms = uiState.getGameMessages();
     

@@ -4,8 +4,11 @@
 package com.frontend;
 
 import com.all.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author insidiousnoxious
@@ -13,7 +16,7 @@ import java.util.List;
  */
 public class UIState {
   
-  private List<UIMenu> menuList;
+  private Map<UIMenuType,UIMenu> menuMap;
   private List<GameMessage> gameMessages;
   private GameMap gameMap;
   
@@ -22,25 +25,30 @@ public class UIState {
    */
   public UIState(GameMap gameMap){
     this.gameMap = gameMap;
-    this.menuList = new ArrayList<UIMenu>();
+    this.menuMap = new HashMap<UIMenuType,UIMenu>();
     this.gameMessages = new ArrayList<GameMessage>();
   }
   
   /*
    * Initialize with given list and gameMap
    */
-  public UIState(GameMap gameMap, List<UIMenu> menuList, List<GameMessage> gameMessages){
-    this.menuList = menuList;
+  public UIState(GameMap gameMap, HashMap<UIMenuType,UIMenu> menuList, List<GameMessage> gameMessages){
+    this.menuMap = menuList;
     this.gameMap = gameMap;
     this.gameMessages = gameMessages;
   }
   
   /**
-   * @return the menuList
+   * @return the menuMap
    */
-  public List<UIMenu> getMenuList() {
-    return menuList;
+  public Map<UIMenuType,UIMenu> getMenuList() {
+    return menuMap;
   }
+  
+  public void addMenu(UIMenuType umt, UIMenu um){
+    menuMap.put(umt, um);    
+  }
+  
   /**
    * @return the gameMap
    */
