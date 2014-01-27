@@ -4,7 +4,6 @@
 package com.runner;
 
 import java.util.List;
-import java.util.Map;
 
 import com.backend.*;
 import com.engine.Engine;
@@ -21,7 +20,7 @@ public class DummyRunnerForUI implements Runner {
   private UI ui;
   private static UIState GenerateTestUIState(){
     GameMapEntry defaultGme = new GameMapEntry(' ',GameMapEntryColor.BLACK, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL);
-    GameMap gm = new ArrayGameMap(5,5, defaultGme);
+    GameMap gm = new ArrayGameMap(10,20, defaultGme);
     
     gm.setObjectAt(0,0, new GameMapEntry('J',GameMapEntryColor.BLUE, GameMapEntryColor.BLACK, GameMapEntryAttribute.BOLD));
     gm.setObjectAt(0,1, new GameMapEntry('U',GameMapEntryColor.CYAN, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
@@ -33,7 +32,7 @@ public class DummyRunnerForUI implements Runner {
     gm.setObjectAt(3,2, new GameMapEntry('S',GameMapEntryColor.BLACK, GameMapEntryColor.YELLOW, GameMapEntryAttribute.NORMAL));
     gm.setObjectAt(3,3, new GameMapEntry('T',GameMapEntryColor.GREEN, GameMapEntryColor.RED, GameMapEntryAttribute.NORMAL));
     gm.setObjectAt(3,4, new GameMapEntry('!',GameMapEntryColor.BLUE, GameMapEntryColor.MAGENTA, GameMapEntryAttribute.BOLD));
-    gm.setObjectAt(4,4, new GameMapEntry('@',GameMapEntryColor.WHITE, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
+    gm.setObjectAt(9,19, new GameMapEntry('@',GameMapEntryColor.WHITE, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
     
     UIState uiState = new UIState(gm);
     
@@ -44,7 +43,7 @@ public class DummyRunnerForUI implements Runner {
     
     List<GameMessage> gms = uiState.getGameMessages();
     
-    gms.add(new GameMessage("This is a dummy runner for the UI",GameMessageType.NOTIFICATION));
+    gms.add(new GameMessage("This is a dummy runner for the UI!!!",GameMessageType.NOTIFICATION));
     gms.add(new GameMessage("It is dark in here!",GameMessageType.WARNING));
     gms.add(new GameMessage("You have been eaten by a grue!",GameMessageType.COMBAT));
     

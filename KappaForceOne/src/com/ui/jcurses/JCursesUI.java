@@ -57,8 +57,8 @@ public class JCursesUI extends Window implements UI {
     gameMapPanel = new BorderPanel(80,20);
 
     mainWindowManager.addWidget(buttonPanel, 0,0,10,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
-    mainWindowManager.addWidget(gameMapPanel, 0,1,10,5, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
-    mainWindowManager.addWidget(messageList, 0,6,10,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(gameMapPanel, 0,1,5,6, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+    mainWindowManager.addWidget(messageList, 5,1,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     
 
     this.pack();
