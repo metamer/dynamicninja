@@ -140,7 +140,7 @@ public class JCursesUI extends Window implements UI {
   private void populateGameMap(GameMap gmap){
     int mapHeight = gmap.getHeight();
     int mapWidth = gmap.getWidth();
-    GridLayoutManager gm = new GridLayoutManager(mapWidth, mapHeight);
+    DefaultLayoutManager gm = new DefaultLayoutManager();
       
     gameMapPanel.setLayoutManager(gm);
     
