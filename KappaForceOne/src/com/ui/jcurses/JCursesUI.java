@@ -47,7 +47,7 @@ public class JCursesUI extends Window implements UI {
   public JCursesUI(int width, int height){
     super(width,height, true, "Game");
         
-    BorderLayoutManager mainWindowManager = new BorderLayoutManager();
+    GridLayoutManager mainWindowManager = new GridLayoutManager(10,10);
     getRootPanel().setLayoutManager(mainWindowManager);
 
     buttonPanel = new BorderPanel();
@@ -56,9 +56,10 @@ public class JCursesUI extends Window implements UI {
     
     gameMapPanel = new BorderPanel(80,20);
 
-    mainWindowManager.addWidget(buttonPanel, BorderLayoutManager.SOUTH, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
-    mainWindowManager.addWidget(messageList, BorderLayoutManager.EAST, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
-    mainWindowManager.addWidget(gameMapPanel, BorderLayoutManager.CENTER, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+    mainWindowManager.addWidget(buttonPanel, 0,0,10,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(gameMapPanel, 0,1,10,5, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+    mainWindowManager.addWidget(messageList, 0,6,10,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    
 
     this.pack();
     this.show();
@@ -148,7 +149,7 @@ public class JCursesUI extends Window implements UI {
         GameMapEntry gme = gmap.getObjectAt(row, col);
         
         Label l = new Label(Character.toString(gme.getSymbol()),new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor())));
-        gm.addWidget(l, col, row, 1, 1, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+        gm.addWidget(l, col, row, 1, 1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_TOP);
         
       }
     }
