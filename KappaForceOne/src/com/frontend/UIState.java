@@ -18,6 +18,7 @@ public class UIState {
   
   private Map<UIMenuType,UIMenu> menuMap;
   private List<GameMessage> gameMessages;
+  private CurrentGameMessage currentGameMessage;
   private GameMap gameMap;
   
   /*
@@ -27,15 +28,17 @@ public class UIState {
     this.gameMap = gameMap;
     this.menuMap = new HashMap<UIMenuType,UIMenu>();
     this.gameMessages = new ArrayList<GameMessage>();
+    this.currentGameMessage = new CurrentGameMessage("");
   }
   
   /*
    * Initialize with given list and gameMap
    */
-  public UIState(GameMap gameMap, HashMap<UIMenuType,UIMenu> menuList, List<GameMessage> gameMessages){
+  public UIState(GameMap gameMap, HashMap<UIMenuType,UIMenu> menuList, List<GameMessage> gameMessages, CurrentGameMessage currentGameMessage){
     this.menuMap = menuList;
     this.gameMap = gameMap;
     this.gameMessages = gameMessages;
+    this.currentGameMessage=currentGameMessage;
   }
   
   /**
@@ -57,11 +60,25 @@ public class UIState {
   }
   
   /**
+   * set the gameMap
+   */
+  public void setGameMap(GameMap gameMap) {
+    this.gameMap = gameMap;
+  }
+  
+  /**
    * @return the gameMessages
    */
   public List<GameMessage> getGameMessages() {
     return gameMessages;
   }
   
+  public CurrentGameMessage getCurrentGameMessage(){
+    return currentGameMessage;
+  }
+  
+  public void setCurrentGameMessage(CurrentGameMessage currentGameMessage){
+    this.currentGameMessage = currentGameMessage;
+  }
 
 }

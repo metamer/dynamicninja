@@ -1,5 +1,6 @@
 package com.ui.jcurses;
 
+import com.all.CurrentGameMessage;
 import com.all.GameMessage;
 import com.frontend.GameMap;
 import com.frontend.GameMapEntry;
@@ -25,12 +26,14 @@ import java.util.Map;
 
 public class JCursesUI extends Window implements UI {
 
-  private List messageList = null;
-  private final int MESSAGE_LIMIT = 3;
+  private List messageList = null, currentMessageList= null;
+  private final int MESSAGE_LIMIT = 5;
   
   private java.util.List<Button> menuList;
   private Map<Button,UIMenuType> buttonToMenuTypeMap = new HashMap<Button,UIMenuType>();
   BorderPanel buttonPanel, gameMapPanel;
+  
+  private final static CharColor shortCutColor = new CharColor(CharColor.RED,CharColor.BLACK);
 
   
   private static final Map<GameMapEntryColor, Short> COLOR_MAP = new HashMap<GameMapEntryColor,Short>(){{
@@ -54,11 +57,15 @@ public class JCursesUI extends Window implements UI {
     messageList = new List(MESSAGE_LIMIT);
     messageList.setTitle("Messages");
     
+    currentMessageList = new List(MESSAGE_LIMIT);
+    currentMessageList.setTitle("Current Message");
+    
     gameMapPanel = new BorderPanel(80,20);
 
     mainWindowManager.addWidget(buttonPanel, 0,0,10,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
-    mainWindowManager.addWidget(gameMapPanel, 0,1,5,6, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+    mainWindowManager.addWidget(gameMapPanel, 0,1,5,9, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
     mainWindowManager.addWidget(messageList, 5,1,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(currentMessageList, 5,4,5,5, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     
 
     this.pack();
@@ -72,7 +79,8 @@ public class JCursesUI extends Window implements UI {
     
 
     populateMenus(uiState.getMenuMap());
-    populateMessages(uiState.getGameMessages());
+    populateMessageList(uiState.getGameMessages());
+    populateCurrentMessage(uiState.getCurrentGameMessage());
     populateGameMap(uiState.getGameMap());
     this.pack();
     this.repaint();
@@ -89,6 +97,14 @@ public class JCursesUI extends Window implements UI {
     // TODO Auto-generated method stub
 
   }
+  
+  private void populateCurrentMessage(CurrentGameMessage currentGameMessage) {
+    currentMessageList.clear();
+    for(String s : currentGameMessage.getMessageText().split(String.format("%s",System.getProperty("line.separator")))){
+      currentMessageList.add(s);
+    }
+    
+  }
 
   private void populateMenus(Map<UIMenuType,UIMenu> menuMap){
     
@@ -101,6 +117,12 @@ public class JCursesUI extends Window implements UI {
       UIMenu val = menuMap.get(umt);
       if(val != null){
         Button b = new Button(val.getName());
+        
+        if(val.getHotkey() != null){
+          b.setShortCut(val.getHotkey());
+          //b.setShortCutColors(shortCutColor);
+        }
+        
         buttonToMenuTypeMap.put(b,umt);
         menuList.add(b);
       }
@@ -118,9 +140,8 @@ public class JCursesUI extends Window implements UI {
     }
   }
   
-  private void populateMessages(java.util.List<GameMessage> lgm){
-    
-    
+  private void populateMessageList(java.util.List<GameMessage> lgm){
+       
     messageList.clear();
     
     int addedMessages=0;

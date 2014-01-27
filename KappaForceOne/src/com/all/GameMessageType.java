@@ -12,6 +12,7 @@ public enum GameMessageType {
   COMBAT,
   NOTIFICATION,
   WARNING,
-  SYSTEM
+  SYSTEM,
+  CURRENT
 
 }

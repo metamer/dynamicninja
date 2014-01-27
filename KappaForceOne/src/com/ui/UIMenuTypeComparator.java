@@ -39,7 +39,7 @@ public class UIMenuTypeComparator implements Comparator<UIMenuType> {
         i1 = i1 == null ? Integer.MAX_VALUE : i1;
         i2 = i2 == null ? Integer.MAX_VALUE : i2;
         
-        return (i1 > i2 ? -1 : (i1 == i2 ? 0 : 1));
+        return (i1 > i2 ? 1 : (i1 == i2 ? 0 : -1));
     }
   
 }

@@ -20,6 +20,12 @@ public class UIMenu {
     menuItems.getRoot().setData(new UIMenuItem(name));
   }
   
+  public UIMenu(String name, Character hotkey){
+    this(name);
+    menuItems.getRoot().getData().setHotkey(hotkey);
+  }
+  
+  
   //accessor methods
   
   public String getName(){
@@ -28,6 +34,15 @@ public class UIMenu {
     }
     
     return menuItems.getRoot().getData().getName();
+    
+  }
+  
+  public Character getHotkey(){
+    if(menuItems.getRoot().getData() == null){
+      return null;
+    }
+    
+    return menuItems.getRoot().getData().getHotkey();
     
   }
 

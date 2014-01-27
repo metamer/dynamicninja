@@ -32,20 +32,23 @@ public class DummyRunnerForUI implements Runner {
     gm.setObjectAt(3,2, new GameMapEntry('S',GameMapEntryColor.BLACK, GameMapEntryColor.YELLOW, GameMapEntryAttribute.NORMAL));
     gm.setObjectAt(3,3, new GameMapEntry('T',GameMapEntryColor.GREEN, GameMapEntryColor.RED, GameMapEntryAttribute.NORMAL));
     gm.setObjectAt(3,4, new GameMapEntry('!',GameMapEntryColor.BLUE, GameMapEntryColor.MAGENTA, GameMapEntryAttribute.BOLD));
-    gm.setObjectAt(9,19, new GameMapEntry('@',GameMapEntryColor.WHITE, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
+    gm.setObjectAt(gm.getHeight()-1,gm.getWidth()-1, new GameMapEntry('@',GameMapEntryColor.WHITE, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
     
     UIState uiState = new UIState(gm);
     
     
-    uiState.addMenu(UIMenuType.ACTIONS, new UIMenu("FirstMenu"));
-    uiState.addMenu(UIMenuType.SYSTEM, new UIMenu("MenuSecond"));
-    uiState.addMenu(UIMenuType.COMBAT, new UIMenu("MenuTheIII"));
+    uiState.addMenu(UIMenuType.INVENTORY, new UIMenu("Junk",'J'));
+    uiState.addMenu(UIMenuType.ACTIONS, new UIMenu("Actions", 'A'));
+    uiState.addMenu(UIMenuType.SYSTEM, new UIMenu("System",'S'));
+    uiState.addMenu(UIMenuType.COMBAT, new UIMenu("Fight!",'F'));
     
     List<GameMessage> gms = uiState.getGameMessages();
     
     gms.add(new GameMessage("This is a dummy runner for the UI!!!",GameMessageType.NOTIFICATION));
     gms.add(new GameMessage("It is dark in here!",GameMessageType.WARNING));
     gms.add(new GameMessage("You have been eaten by a grue!",GameMessageType.COMBAT));
+    
+    uiState.setCurrentGameMessage(new CurrentGameMessage(String.format("You are in a creature's stomach.%sWhat do you do?",System.getProperty("line.separator"))));
     
     return uiState;
   }
