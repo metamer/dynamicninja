@@ -27,12 +27,12 @@ import java.util.Map;
 
 public class JCursesUI extends Window implements UI {
 
-  private List messageList = null, currentMessageList= null;
+  private CustomList messageList = null, currentMessageList= null;
   private final int MESSAGE_LIMIT = 5;
   
-  private java.util.List<Button> menuList;
-  private Map<Button,UIMenuType> buttonToMenuTypeMap = new HashMap<Button,UIMenuType>();
-  BorderPanel buttonPanel, gameMapPanel;
+  private java.util.List<CustomButton> menuList;
+  private Map<CustomButton,UIMenuType> buttonToMenuTypeMap = new HashMap<CustomButton,UIMenuType>();
+  CustomBorderPanel buttonPanel, gameMapPanel;
   TextField inputField, tf_2, tf_3;
   private final static CharColor shortCutColor = new CharColor(CharColor.RED,CharColor.BLACK);
   private UIState uiState;
@@ -60,14 +60,14 @@ public class JCursesUI extends Window implements UI {
     GridLayoutManager mainWindowManager = new GridLayoutManager(10,10);
     getRootPanel().setLayoutManager(mainWindowManager);
 
-    buttonPanel = new BorderPanel();
-    messageList = new List(MESSAGE_LIMIT);
+    buttonPanel = new CustomBorderPanel();
+    messageList = new CustomList(MESSAGE_LIMIT);
     messageList.setTitle("Messages");
     
-    currentMessageList = new List(MESSAGE_LIMIT);
+    currentMessageList = new CustomList(MESSAGE_LIMIT);
     currentMessageList.setTitle("Current Message");
     
-    gameMapPanel = new BorderPanel(80,20);
+    gameMapPanel = new CustomBorderPanel(80,20);
     
     inputField = new TextField(5);
 
@@ -88,9 +88,9 @@ public class JCursesUI extends Window implements UI {
   public void drawUIState() {
     
     if(!uiInit){
-        populateMenus(uiState.getMenuMap());
-        populateMessageList(uiState.getGameMessages());
-        populateCurrentMessage(uiState.getCurrentGameMessage());
+        populateMenus();
+        populateMessageList();
+        populateCurrentMessage();
         populateGameMap();
         
         this.pack();
@@ -99,19 +99,32 @@ public class JCursesUI extends Window implements UI {
         uiInit = true;
         
     }else{
-        
+        updateMenus();
+        updateMessageList();
+        updateCurrentMessage();
         updateGameMap();
     }
     
   }
   
   public void updateMenus(){
+      if(repopulateMenus()){
+          redrawMenus();
+      }
   }
   
   public void updateMessageList(){
+      if(repopulateMessageList()){
+          redrawMessageList();
+      }
   }
   
   public void updateCurrentMessage(){
+      if(repopulateCurrentMessage()){
+          redrawCurrentMessage();
+      }
+      
+      
   }
   
   public void updateGameMap(){
@@ -132,25 +145,45 @@ public class JCursesUI extends Window implements UI {
 
   }
   
-  private void populateCurrentMessage(CurrentGameMessage currentGameMessage) {
+  private boolean repopulateCurrentMessage(){
+      populateCurrentMessage();
+      return true;
+  }
+  
+  private void redrawCurrentMessage(){
+      currentMessageList.doRepaint();
+  }
+  
+  private void populateCurrentMessage() {
+    CurrentGameMessage currentGameMessage = uiState.getCurrentGameMessage();
     currentMessageList.clear();
     for(String s : currentGameMessage.getMessageText().split(String.format("%s",System.getProperty("line.separator")))){
       currentMessageList.add(s);
     }
     
   }
+  
+  private boolean repopulateMenus(){
+      populateMenus();
+      return true;
+  }
+  
+  private void redrawMenus(){
+      buttonPanel.pack();
+       buttonPanel.doPaint();
+  }
 
-  private void populateMenus(Map<UIMenuType,UIMenu> menuMap){
-    
-    menuList = new ArrayList<Button>();
+  private void populateMenus(){
+    Map<UIMenuType,UIMenu> menuMap = uiState.getMenuMap();
+    menuList = new ArrayList<CustomButton>();
 
-    buttonToMenuTypeMap = new HashMap<Button,UIMenuType>();
+    buttonToMenuTypeMap = new HashMap<CustomButton,UIMenuType>();
     java.util.List<UIMenuType> availableMenuTypes = new ArrayList<UIMenuType>(menuMap.keySet());
     Collections.sort(availableMenuTypes, new UIMenuTypeComparator());
     for( UIMenuType umt : availableMenuTypes){
       UIMenu val = menuMap.get(umt);
       if(val != null){
-        Button b = new Button(val.getName());
+        CustomButton b = new CustomButton(val.getName());
         
         if(val.getHotkey() != null){
           b.setShortCut(val.getHotkey());
@@ -166,7 +199,7 @@ public class JCursesUI extends Window implements UI {
     buttonPanel.setLayoutManager(gm);
 
     int i = 0;
-    for(Button b : menuList){
+    for(CustomButton b : menuList){
       if(b != null){
         gm.addWidget(b, i, 0, 1, 1,WidgetsConstants.ALIGNMENT_TOP,WidgetsConstants.ALIGNMENT_LEFT);
         i++;
@@ -174,8 +207,18 @@ public class JCursesUI extends Window implements UI {
     }
   }
   
-  private void populateMessageList(java.util.List<GameMessage> lgm){
-       
+
+  private void redrawMessageList(){
+      messageList.doRepaint();      
+  }
+  
+  private boolean repopulateMessageList(){
+       populateMessageList();
+       return true;
+  }
+  
+  private void populateMessageList(){
+    java.util.List<GameMessage> lgm = uiState.getGameMessages();
     messageList.clear();
     
     int addedMessages=0;
@@ -194,7 +237,7 @@ public class JCursesUI extends Window implements UI {
   
   private void redrawGameMap(){
       for(ModifiableLabel ml : coordLabelMap.values()){
-          ml.doRepaint();
+          ml.doRepaint(); //repaint one by one to prevent flickering
       }
   }
   
