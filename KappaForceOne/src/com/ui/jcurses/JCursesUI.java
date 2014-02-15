@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import jcurses.custom.*;
 
 public class JCursesUI extends Window implements UI {
 

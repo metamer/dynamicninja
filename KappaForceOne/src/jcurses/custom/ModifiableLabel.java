@@ -1,4 +1,4 @@
-package com.ui.jcurses;
+package jcurses.custom;
 
 import jcurses.widgets.Widget;
 
@@ -82,7 +82,7 @@ public class ModifiableLabel extends Widget {
 	}
 	
 	
-	protected void doRepaint() {
+	public void doRepaint() {
 		doPaint();
 	}
 	

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ui.jcurses;
+package jcurses.custom;
 
 import jcurses.widgets.BorderPanel;
 

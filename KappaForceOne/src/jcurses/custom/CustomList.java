@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ui.jcurses;
+package jcurses.custom;
 
 import jcurses.widgets.List;
 
@@ -16,6 +16,7 @@ public class CustomList extends List {
      */
     public CustomList() {
         // TODO Auto-generated constructor stub
+        super();
     }
 
     /**
