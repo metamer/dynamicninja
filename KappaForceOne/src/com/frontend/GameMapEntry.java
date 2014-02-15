@@ -72,5 +72,14 @@ public class GameMapEntry {
     }
     return true;
   }
+  
+  @Override
+  public int hashCode(){
+      int hashCode = 0;
+      hashCode += this.backgroundColor.hashCode();
+      hashCode += this.foregroundColor.hashCode();
+      hashCode += this.attribute.hashCode();
+      return hashCode;
+  }
 
 }
