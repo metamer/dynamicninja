@@ -92,19 +92,32 @@ public class JCursesUI extends Window implements UI {
         populateMessageList(uiState.getGameMessages());
         populateCurrentMessage(uiState.getCurrentGameMessage());
         populateGameMap();
+        
+        this.pack();
+        this.repaint();
+        
         uiInit = true;
+        
     }else{
-        populateMenus(uiState.getMenuMap());
-        populateMessageList(uiState.getGameMessages());
-        populateCurrentMessage(uiState.getCurrentGameMessage());
-        repopulateGameMap();
+        
+        updateGameMap();
     }
-    this.pack();
-    this.repaint();
+    
+  }
+  
+  public void updateMenus(){
+  }
+  
+  public void updateMessageList(){
+  }
+  
+  public void updateCurrentMessage(){
   }
   
   public void updateGameMap(){
-      repopulateGameMap();
+      if(repopulateGameMap()){
+          redrawGameMap();
+      }
   }
 
   @Override
@@ -179,7 +192,13 @@ public class JCursesUI extends Window implements UI {
     
   }
   
-  private void repopulateGameMap(){
+  private void redrawGameMap(){
+      for(ModifiableLabel ml : coordLabelMap.values()){
+          ml.doRepaint();
+      }
+  }
+  
+  private boolean repopulateGameMap(){
       
       GameMap gmap = uiState.getGameMap();
       
@@ -199,9 +218,10 @@ public class JCursesUI extends Window implements UI {
           
           targetLabel.setString(Character.toString(gme.getSymbol()));
           targetLabel.setColors(new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor()))); 
-                    
         }
       }
+      
+      return true;
   }
   
   private void populateGameMap(){
