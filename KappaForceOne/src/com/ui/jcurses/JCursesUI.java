@@ -2,6 +2,7 @@ package com.ui.jcurses;
 
 import com.all.CurrentGameMessage;
 import com.all.GameMessage;
+import com.all.util.Pair;
 import com.frontend.GameMap;
 import com.frontend.GameMapEntry;
 import com.frontend.GameMapEntryColor;
@@ -34,7 +35,9 @@ public class JCursesUI extends Window implements UI {
   BorderPanel buttonPanel, gameMapPanel;
   TextField inputField, tf_2, tf_3;
   private final static CharColor shortCutColor = new CharColor(CharColor.RED,CharColor.BLACK);
-
+  private UIState uiState;
+  private HashMap<Pair<Integer,Integer>,ModifiableLabel> coordLabelMap;
+  private boolean uiInit;
   
   private static final Map<GameMapEntryColor, Short> COLOR_MAP = new HashMap<GameMapEntryColor,Short>(){{
     put(GameMapEntryColor.BLUE, CharColor.BLUE);
@@ -49,7 +52,11 @@ public class JCursesUI extends Window implements UI {
   
   public JCursesUI(int width, int height){
     super(width,height, true, "Game");
-        
+    
+    uiInit = false;
+    coordLabelMap = new HashMap<Pair<Integer,Integer>,ModifiableLabel> ();
+    
+    
     GridLayoutManager mainWindowManager = new GridLayoutManager(10,10);
     getRootPanel().setLayoutManager(mainWindowManager);
 
@@ -78,16 +85,26 @@ public class JCursesUI extends Window implements UI {
   }
 
   @Override
-  public void drawUIState(UIState uiState) {
-    // TODO Auto-generated method stub
+  public void drawUIState() {
     
-
-    populateMenus(uiState.getMenuMap());
-    populateMessageList(uiState.getGameMessages());
-    populateCurrentMessage(uiState.getCurrentGameMessage());
-    populateGameMap(uiState.getGameMap());
+    if(!uiInit){
+        populateMenus(uiState.getMenuMap());
+        populateMessageList(uiState.getGameMessages());
+        populateCurrentMessage(uiState.getCurrentGameMessage());
+        populateGameMap();
+        uiInit = true;
+    }else{
+        populateMenus(uiState.getMenuMap());
+        populateMessageList(uiState.getGameMessages());
+        populateCurrentMessage(uiState.getCurrentGameMessage());
+        repopulateGameMap();
+    }
     this.pack();
     this.repaint();
+  }
+  
+  public void updateGameMap(){
+      repopulateGameMap();
   }
 
   @Override
@@ -98,7 +115,7 @@ public class JCursesUI extends Window implements UI {
 
   @Override
   public void setUIState(UIState uiState) {
-    // TODO Auto-generated method stub
+    this.uiState = uiState;
 
   }
   
@@ -162,7 +179,35 @@ public class JCursesUI extends Window implements UI {
     
   }
   
-  private void populateGameMap(GameMap gmap){
+  private void repopulateGameMap(){
+      
+      GameMap gmap = uiState.getGameMap();
+      
+      int mapHeight = gmap.getHeight();
+      int mapWidth = gmap.getWidth();
+           
+      for(int row = 0 ; row < mapHeight ; row++){
+        for(int col = 0 ; col < mapWidth ; col++){
+          GameMapEntry gme = gmap.getObjectAt(row, col);
+          
+          Pair<Integer,Integer> coord = new Pair<Integer,Integer>(row,col); 
+          
+          ModifiableLabel targetLabel = coordLabelMap.get(coord);
+          if(targetLabel == null){
+              throw new IllegalStateException("Encountered unpopulated coordinate when updating game map");
+          }
+          
+          targetLabel.setString(Character.toString(gme.getSymbol()));
+          targetLabel.setColors(new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor()))); 
+                    
+        }
+      }
+  }
+  
+  private void populateGameMap(){
+    
+    GameMap gmap = uiState.getGameMap();
+    
     int mapHeight = gmap.getHeight();
     int mapWidth = gmap.getWidth();
     DefaultLayoutManager gm = new DefaultLayoutManager();
@@ -173,8 +218,14 @@ public class JCursesUI extends Window implements UI {
       for(int col = 0 ; col < mapWidth ; col++){
         GameMapEntry gme = gmap.getObjectAt(row, col);
         
-        Label l = new Label(Character.toString(gme.getSymbol()),new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor())));
+        ModifiableLabel l = new ModifiableLabel(Character.toString(gme.getSymbol()),new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor())));
+        
         gm.addWidget(l, col, row, 1, 1, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+        
+        Pair<Integer,Integer> p = new Pair<Integer, Integer>(row,col);
+        coordLabelMap.put(p, l);
+        
+                
         
       }
     }

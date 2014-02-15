@@ -11,7 +11,7 @@ public interface UI {
   /*
    * Draw the UIState passed in 
    */
-  public void drawUIState(UIState uiState);
+  public void drawUIState();
   
   /*
    * Get action from user

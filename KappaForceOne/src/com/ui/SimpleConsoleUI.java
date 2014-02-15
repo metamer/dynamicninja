@@ -14,11 +14,15 @@ import com.frontend.*;
  */
 public class SimpleConsoleUI implements UI {
 
+  
+  
+  UIState uiState;
+  
   /* (non-Javadoc)
    * @see com.ui.UI#drawCurrentState()
    */
   @Override
-  public void drawUIState(UIState uiState) {
+  public void drawUIState() {
     
     GameMap gm = uiState.getGameMap();
     
@@ -67,7 +71,7 @@ public class SimpleConsoleUI implements UI {
   @Override
   public void setUIState(UIState uiState) {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException();
+    this.uiState = uiState;
   }
 
 }

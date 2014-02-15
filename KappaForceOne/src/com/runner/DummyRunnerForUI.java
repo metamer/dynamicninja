@@ -18,9 +18,14 @@ import com.all.*;
 public class DummyRunnerForUI implements Runner {
   
   private UI ui;
-  private static UIState GenerateTestUIState(){
+  private int counter = 0;
+  private static UIState GenerateTestUIState(int i ){
     GameMapEntry defaultGme = new GameMapEntry(' ',GameMapEntryColor.BLACK, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL);
     GameMap gm = new ArrayGameMap(15,35, defaultGme);
+    
+    int heightOffset = i % 2;
+    int widthOffset =  i % 35;
+    
     
     gm.setObjectAt(0,0, new GameMapEntry('J',GameMapEntryColor.BLUE, GameMapEntryColor.BLACK, GameMapEntryAttribute.BOLD));
     gm.setObjectAt(0,1, new GameMapEntry('U',GameMapEntryColor.CYAN, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
@@ -32,7 +37,7 @@ public class DummyRunnerForUI implements Runner {
     gm.setObjectAt(3,2, new GameMapEntry('S',GameMapEntryColor.BLACK, GameMapEntryColor.YELLOW, GameMapEntryAttribute.NORMAL));
     gm.setObjectAt(3,3, new GameMapEntry('T',GameMapEntryColor.GREEN, GameMapEntryColor.RED, GameMapEntryAttribute.NORMAL));
     gm.setObjectAt(3,4, new GameMapEntry('!',GameMapEntryColor.BLUE, GameMapEntryColor.MAGENTA, GameMapEntryAttribute.BOLD));
-    gm.setObjectAt(gm.getHeight()-1,gm.getWidth()-1, new GameMapEntry('@',GameMapEntryColor.WHITE, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
+    gm.setObjectAt(gm.getHeight()-1 - heightOffset, gm.getWidth()-1 - widthOffset, new GameMapEntry('@',GameMapEntryColor.WHITE, GameMapEntryColor.BLACK, GameMapEntryAttribute.NORMAL));
     
     UIState uiState = new UIState(gm);
     
@@ -54,6 +59,7 @@ public class DummyRunnerForUI implements Runner {
   }
   
   public DummyRunnerForUI(){
+      counter = 0;
   }
   
   /* (non-Javadoc)
@@ -61,7 +67,15 @@ public class DummyRunnerForUI implements Runner {
    */
   @Override
   public void runGame(){
-    ui.drawUIState(getUIState());
+      while(counter <=50){
+          ui.setUIState(getUIState());
+          ui.drawUIState();
+          counter ++;
+          try{
+              Thread.sleep(1000);
+          }catch(InterruptedException e){           
+          }
+      }
   }
   
   /* (non-Javadoc)
@@ -69,7 +83,7 @@ public class DummyRunnerForUI implements Runner {
    */
   @Override
   public UIState getUIState() {
-    return GenerateTestUIState();
+    return GenerateTestUIState(counter);
   }
 
   /* (non-Javadoc)
