@@ -20,6 +20,7 @@ public class UIState {
   private List<GameMessage> gameMessages;
   private CurrentGameMessage currentGameMessage;
   private GameMap gameMap;
+  private List<UIStatus> statusMessages;
   
   /*
    * Initialize with an empty List
@@ -28,17 +29,19 @@ public class UIState {
     this.gameMap = gameMap;
     this.menuMap = new HashMap<UIMenuType,UIMenu>();
     this.gameMessages = new ArrayList<GameMessage>();
+    this.statusMessages = new ArrayList<UIStatus>();
     this.currentGameMessage = new CurrentGameMessage("");
   }
   
   /*
    * Initialize with given list and gameMap
    */
-  public UIState(GameMap gameMap, HashMap<UIMenuType,UIMenu> menuList, List<GameMessage> gameMessages, CurrentGameMessage currentGameMessage){
+  public UIState(GameMap gameMap, HashMap<UIMenuType,UIMenu> menuList, List<GameMessage> gameMessages, CurrentGameMessage currentGameMessage, List<UIStatus> statusMessages){
     this.menuMap = menuList;
     this.gameMap = gameMap;
     this.gameMessages = gameMessages;
     this.currentGameMessage=currentGameMessage;
+    this.statusMessages = statusMessages;
   }
   
   /**
