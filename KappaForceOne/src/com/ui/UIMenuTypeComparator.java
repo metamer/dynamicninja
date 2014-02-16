@@ -3,7 +3,6 @@
  */
 package com.ui;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +18,12 @@ public class UIMenuTypeComparator implements Comparator<UIMenuType> {
     /**
      * Ranking of menu types. Lower numbers take priority 
      */
-    private static final Map<UIMenuType, Integer> RANKING_MAP = new HashMap<UIMenuType,Integer>(){{
+    private static final Map<UIMenuType, Integer> RANKING_MAP = new HashMap<UIMenuType,Integer>(){/**
+         * 
+         */
+        private static final long serialVersionUID = -6950023214591156103L;
+
+    {
         put(UIMenuType.SYSTEM, 1);
         put(UIMenuType.ACTIONS, 2);
         put(UIMenuType.INVENTORY, 3);
