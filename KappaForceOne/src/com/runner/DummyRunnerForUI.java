@@ -55,6 +55,19 @@ public class DummyRunnerForUI implements Runner {
     
     uiState.setCurrentGameMessage(new CurrentGameMessage(String.format("You are in a creature's stomach.%sWhat do you do?",System.getProperty("line.separator"))));
     
+    uiState.getStatusMessages().add(new UINumericStatus("Hit Points", "HP", null, UIStatusType.VITAL, 100, 100, true));
+    uiState.getStatusMessages().add(new UINumericStatus("Magic Points", "MP", null, UIStatusType.VITAL, 19, 20, true));
+    uiState.getStatusMessages().add(new UINumericStatus("Speed", "Spd", null, UIStatusType.VITAL,10,0,false));
+    
+    uiState.getStatusMessages().add(new UINumericStatus("Strength", "Str", null, UIStatusType.STAT,10,0,false));
+    uiState.getStatusMessages().add(new UINumericStatus("Dex", "Dex", null, UIStatusType.STAT,4,0,false));
+    uiState.getStatusMessages().add(new UINumericStatus("Intelligence", "Int", null, UIStatusType.STAT,500,0,false));
+    uiState.getStatusMessages().add(new UINumericStatus("Charisma", "Cha", null, UIStatusType.STAT,0,0,false));
+    
+    uiState.getStatusMessages().add(new UIStatus("Bored", "Brd", null, UIStatusType.EFFECT));
+    uiState.getStatusMessages().add(new UIStatus("Drowsy", "Drs", null, UIStatusType.EFFECT));
+    uiState.getStatusMessages().add(new UIStatus("Fatigued", "Ftg", null, UIStatusType.EFFECT));
+    
     return uiState;
   }
   
