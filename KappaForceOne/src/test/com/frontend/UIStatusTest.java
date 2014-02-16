@@ -13,6 +13,7 @@ import com.frontend.GameMapEntry;
 import com.frontend.GameMapEntryAttribute;
 import com.frontend.GameMapEntryColor;
 import com.frontend.UIStatus;
+import com.frontend.UIStatusType;
 
 /**
  * @author insidiousnoxious
@@ -24,9 +25,9 @@ public class UIStatusTest {
     
     @Before
     public void setUp(){
-        uis = new UIStatus("Hit Points", "Hp", "Represents health of entity");
-        uisTitleOnly = new UIStatus("Rage", null, null);
-        uisNull = new UIStatus(null, null, null);
+        uis = new UIStatus("Hit Points", "Hp", "Represents health of entity", UIStatusType.VITAL);
+        uisTitleOnly = new UIStatus("Rage", null, null, UIStatusType.STAT);
+        uisNull = new UIStatus(null, null, null, null);
     }
     
     /**
@@ -69,6 +70,14 @@ public class UIStatusTest {
     @Test
     public void testToStringNulls() {
         assertEquals("",uisNull.toString());
+    }
+    
+    public void statusTypeTest(){
+        assertEquals(UIStatusType.VITAL, uis);
+        assertEquals(UIStatusType.STAT, uisTitleOnly);
+        assertNull(uisNull.statusType);
+        uisNull.statusType = UIStatusType.BUFF;
+        assertEquals(UIStatusType.BUFF, uisNull.statusType);
     }
 
 }

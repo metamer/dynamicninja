@@ -20,8 +20,8 @@ public class UINumericStatus extends UIStatus {
      * @param current current value of status
      * @param max max value of status
      */
-    public UINumericStatus(String title, String abbreviation, String description, int current, int max, boolean displayMax) {
-        super(title, abbreviation, description);
+    public UINumericStatus(String title, String abbreviation, String description, UIStatusType statusType, int current, int max, boolean displayMax) {
+        super(title, abbreviation, description, statusType);
         this.current=current;
         this.max=max;
         this.displayMax = displayMax;
