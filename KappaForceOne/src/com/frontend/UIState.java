@@ -55,7 +55,6 @@ public class UIState {
 
     public void addMenu(UIMenuType umt, UIMenu um){
         menuMap.put(umt, um);
-        menuMapUpdated= true;
     }
 
     /**
@@ -70,7 +69,6 @@ public class UIState {
      */
     public void setGameMap(GameMap gameMap) {
         this.gameMap = gameMap;
-        gameMapUpdated= true;
     }
 
     /**
@@ -86,7 +84,6 @@ public class UIState {
 
     public void setCurrentGameMessage(CurrentGameMessage currentGameMessage){
         this.currentGameMessage = currentGameMessage;
-        currentGameMessageUpdated= true;
     }
 
     public List<UIStatus> getStatusMessages() {

@@ -178,7 +178,7 @@ public class JCursesUI extends Window implements UI {
                 currentMessageList.add(s);
             }
 
-            uiState.statusMessagesUpdated = false;
+            uiState.currentGameMessageUpdated = false;
         }
 
         private boolean repopulateMenus(){
