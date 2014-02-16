@@ -83,5 +83,9 @@ public class UIState {
   public void setCurrentGameMessage(CurrentGameMessage currentGameMessage){
     this.currentGameMessage = currentGameMessage;
   }
+    
+    public List<UIStatus> getStatusMessages() {
+        return statusMessages;
+      }
 
 }

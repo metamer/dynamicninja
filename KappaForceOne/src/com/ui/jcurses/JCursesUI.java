@@ -8,6 +8,7 @@ import com.frontend.GameMapEntry;
 import com.frontend.GameMapEntryColor;
 import com.frontend.UIMenuType;
 import com.frontend.UIState;
+import com.frontend.UIStatus;
 import com.frontend.UserAction;
 import com.frontend.UIMenu;
 import com.ui.UI;
@@ -24,11 +25,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 import jcurses.custom.*;
 
 public class JCursesUI extends Window implements UI {
 
-  private CustomList messageList = null, currentMessageList= null;
+  private CustomList messageList = null, currentMessageList= null, statusMessageList=null;
   private final int MESSAGE_LIMIT = 5;
   
   private java.util.List<CustomButton> menuList;
@@ -73,6 +75,8 @@ public class JCursesUI extends Window implements UI {
     currentMessageList = new CustomList(MESSAGE_LIMIT);
     currentMessageList.setTitle("Current Message");
     
+    statusMessageList = new CustomList(MESSAGE_LIMIT);
+    
     gameMapPanel = new CustomBorderPanel(80,20);
     
     //inputField = new TextField(5);
@@ -81,6 +85,7 @@ public class JCursesUI extends Window implements UI {
     mainWindowManager.addWidget(gameMapPanel, 0,1,5,9, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
     mainWindowManager.addWidget(currentMessageList, 5,1,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     mainWindowManager.addWidget(messageList, 5,4,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(statusMessageList, 5,7,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     
     //mainWindowManager.addWidget(inputField, 5,9,5,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     
@@ -97,7 +102,9 @@ public class JCursesUI extends Window implements UI {
         populateMenus();
         populateMessageList();
         populateCurrentMessage();
+        populateStatusMessageList();
         populateGameMap();
+        
         
         this.pack();
         this.repaint();
@@ -108,6 +115,7 @@ public class JCursesUI extends Window implements UI {
         updateMenus();
         updateMessageList();
         updateCurrentMessage();
+        updateStatusMessageList();
         updateGameMap();
     }
     
@@ -131,6 +139,12 @@ public class JCursesUI extends Window implements UI {
       }
       
       
+  }
+  
+  public void updateStatusMessageList(){
+      if(repopulateStatusMessageList()){
+          redrawStatusMessageList();
+      }
   }
   
   public void updateGameMap(){
@@ -238,7 +252,26 @@ public class JCursesUI extends Window implements UI {
       }
     }
     
-    
+  }
+  
+  private void redrawStatusMessageList(){
+      statusMessageList.doRepaint();      
+  }
+  
+  private boolean repopulateStatusMessageList(){
+       populateStatusMessageList();
+       return true;
+  }
+  
+  private void populateStatusMessageList(){
+      java.util.List<UIStatus> uis = uiState.getStatusMessages();
+      statusMessageList.clear();
+      
+      for(int i = uis.size() - 1; i >= 0 ; i--){
+        if(uis.get(i) != null){
+          messageList.add(uis.get(i).toString());
+        }
+      }
   }
   
   private void redrawGameMap(){
