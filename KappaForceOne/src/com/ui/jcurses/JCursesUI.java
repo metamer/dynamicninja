@@ -40,7 +40,12 @@ public class JCursesUI extends Window implements UI {
   private HashMap<Pair<Integer,Integer>,ModifiableLabel> coordLabelMap;
   private boolean uiInit;
   
-  private static final Map<GameMapEntryColor, Short> COLOR_MAP = new HashMap<GameMapEntryColor,Short>(){{
+  private static final Map<GameMapEntryColor, Short> COLOR_MAP = new HashMap<GameMapEntryColor,Short>(){/**
+     * 
+     */
+    private static final long serialVersionUID = 1253189769108833435L;
+
+{
     put(GameMapEntryColor.BLUE, CharColor.BLUE);
     put(GameMapEntryColor.CYAN, CharColor.CYAN);
     put(GameMapEntryColor.GREEN, CharColor.GREEN);
