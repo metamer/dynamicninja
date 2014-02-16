@@ -119,19 +119,19 @@ public class JCursesUI extends Window implements UI {
         }
 
         public void updateMenus(){
-            if(repopulateMenus()){
+            if(uiState.menuMapUpdated && repopulateMenus()){
                 redrawMenus();
             }
         }
 
         public void updateMessageList(){
-            if(repopulateMessageList()){
+            if(uiState.gameMessagesUpdated && repopulateMessageList()){
                 redrawMessageList();
             }
         }
 
         public void updateCurrentMessage(){
-            if(repopulateCurrentMessage()){
+            if(uiState.currentGameMessageUpdated && repopulateCurrentMessage()){
                 redrawCurrentMessage();
             }
 
@@ -139,13 +139,13 @@ public class JCursesUI extends Window implements UI {
         }
 
         public void updateStatusMessageList(){
-            if(repopulateStatusMessageList()){
+            if(uiState.statusMessagesUpdated && repopulateStatusMessageList()){
                 redrawStatusMessageList();
             }
         }
 
         public void updateGameMap(){
-            if(repopulateGameMap()){
+            if(uiState.gameMapUpdated && repopulateGameMap()){
                 redrawGameMap();
             }
         }
@@ -178,6 +178,7 @@ public class JCursesUI extends Window implements UI {
                 currentMessageList.add(s);
             }
 
+            uiState.statusMessagesUpdated = false;
         }
 
         private boolean repopulateMenus(){
@@ -222,6 +223,8 @@ public class JCursesUI extends Window implements UI {
                     i++;
                 }
             }
+            
+            uiState.menuMapUpdated = false;
         }
 
 
@@ -248,6 +251,7 @@ public class JCursesUI extends Window implements UI {
                     break;
                 }
             }
+            uiState.gameMessagesUpdated = false;
 
         }
 
@@ -288,6 +292,8 @@ public class JCursesUI extends Window implements UI {
                 statusMessageList.add(typeStringMap.get(uist).toString());
             }
             
+            uiState.statusMessagesUpdated = false;
+            
         }
 
         private void redrawGameMap(){
@@ -318,6 +324,8 @@ public class JCursesUI extends Window implements UI {
                     targetLabel.setColors(new CharColor(COLOR_MAP.get(gme.getForegroundColor()),COLOR_MAP.get(gme.getBackgroundColor()))); 
                 }
             }
+            
+            uiState.gameMapUpdated = false;
 
             return true;
         }
@@ -347,7 +355,8 @@ public class JCursesUI extends Window implements UI {
 
                 }
             }
-
+            
+            uiState.gameMapUpdated = false;
         }
 
 }
