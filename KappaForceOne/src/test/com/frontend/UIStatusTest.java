@@ -76,8 +76,8 @@ public class UIStatusTest {
         assertEquals(UIStatusType.VITAL, uis);
         assertEquals(UIStatusType.STAT, uisTitleOnly);
         assertNull(uisNull.statusType);
-        uisNull.statusType = UIStatusType.BUFF;
-        assertEquals(UIStatusType.BUFF, uisNull.statusType);
+        uisNull.statusType = UIStatusType.EFFECT;
+        assertEquals(UIStatusType.EFFECT, uisNull.statusType);
     }
 
 }

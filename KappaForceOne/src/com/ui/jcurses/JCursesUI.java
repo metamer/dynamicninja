@@ -273,7 +273,7 @@ public class JCursesUI extends Window implements UI {
 
             typeStringMap.put(UIStatusType.VITAL, new StringBuilder());
             typeStringMap.put(UIStatusType.STAT, new StringBuilder());
-            typeStringMap.put(UIStatusType.BUFF, new StringBuilder());
+            typeStringMap.put(UIStatusType.EFFECT, new StringBuilder());
 
             for(int i = 0; i < uis.size() ; i++){
                 if(uis.get(i) != null){

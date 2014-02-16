@@ -10,5 +10,5 @@ package com.frontend;
 public enum UIStatusType {
     VITAL,
     STAT,
-    BUFF
+    EFFECT
 }

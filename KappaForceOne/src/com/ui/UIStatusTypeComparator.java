@@ -26,7 +26,7 @@ public class UIStatusTypeComparator implements Comparator<UIStatusType> {
     {
         put(UIStatusType.VITAL, 1);
         put(UIStatusType.STAT, 2);
-        put(UIStatusType.BUFF, 3);
+        put(UIStatusType.EFFECT, 3);
     }};
 
     
