@@ -18,11 +18,6 @@ import com.ui.UIStatusTypeComparator;
 
 import jcurses.system.*;
 import jcurses.widgets.*;
-import jcurses.util.*;
-import jcurses.event.*;
-
-import java.awt.Rectangle;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
