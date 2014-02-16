@@ -34,7 +34,7 @@ public class JCursesUI extends Window implements UI {
   private java.util.List<CustomButton> menuList;
   private Map<CustomButton,UIMenuType> buttonToMenuTypeMap = new HashMap<CustomButton,UIMenuType>();
   CustomBorderPanel buttonPanel, gameMapPanel;
-  TextField inputField, tf_2, tf_3;
+  //TextField inputField, tf_2, tf_3;
   private final static CharColor shortCutColor = new CharColor(CharColor.RED,CharColor.BLACK);
   private UIState uiState;
   private HashMap<Pair<Integer,Integer>,ModifiableLabel> coordLabelMap;
@@ -70,14 +70,14 @@ public class JCursesUI extends Window implements UI {
     
     gameMapPanel = new CustomBorderPanel(80,20);
     
-    inputField = new TextField(5);
+    //inputField = new TextField(5);
 
     mainWindowManager.addWidget(buttonPanel, 0,0,10,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     mainWindowManager.addWidget(gameMapPanel, 0,1,5,9, WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
-    mainWindowManager.addWidget(currentMessageList, 5,1,5,4, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
-    mainWindowManager.addWidget(messageList, 5,5,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(currentMessageList, 5,1,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    mainWindowManager.addWidget(messageList, 5,4,5,3, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     
-    mainWindowManager.addWidget(inputField, 5,9,5,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
+    //mainWindowManager.addWidget(inputField, 5,9,5,1, WidgetsConstants.ALIGNMENT_TOP, WidgetsConstants.ALIGNMENT_LEFT);
     
 
     this.pack();
